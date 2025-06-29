@@ -34,7 +34,7 @@ function Footer() {
           <h4 className="text-xl font-semibold text-orange-400 mb-3">Get In Touch</h4>
           <div className="flex space-x-4">
             {/* X (Twitter) */}
-            <a href="#" aria-label="X" className="text-orange-400 transition">
+            <a href="https://x.com/ticketna?s=11" aria-label="X" className="text-orange-400 transition">
               <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6">
                 <path d="M22 4.01L14.65 13 21.5 20h-3.2l-5.35-6.19L7.14 20H2l8.03-9.76L2.5 4h3.2l4.88 5.81L16.64 4H22z" />
               </svg>
