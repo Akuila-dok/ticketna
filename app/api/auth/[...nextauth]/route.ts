@@ -4,6 +4,14 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcryptjs';
 import { db } from '@/lib/prisma';
 
+// Define a type that includes `role`
+type AppUser = {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  role: 'Host' | 'Audient';
+};
+
 const handler = NextAuth({
   adapter: PrismaAdapter(db),
   session: {
@@ -38,18 +46,18 @@ const handler = NextAuth({
     }),
   ],
 
-  // ✅ Add callbacks properly here
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = user.role as 'Host' | 'Audient';
+        const typedUser = user as AppUser;
+        token.id = typedUser.id;
+        token.role = typedUser.role;
       }
       return token;
     },
 
     async session({ session, token }) {
-      if (token && session.user) {
+      if (session.user && token) {
         session.user.id = token.id as string;
         session.user.role = token.role as 'Host' | 'Audient';
       }
@@ -57,7 +65,6 @@ const handler = NextAuth({
     },
   },
 
-  // ✅ Add custom pages (optional)
   pages: {
     signIn: '/login',
   },
