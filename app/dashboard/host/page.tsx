@@ -148,8 +148,8 @@ export default function HostDashboard() {
       <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-lg shadow-sm border-b border-teal-200">
         <div className="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/ticketna.png" alt="Ticketna Logo" width={42} height={42} />
-            <span className="text-2xl font-bold text-teal-700">Ticketna</span>
+            <Image src="/tiketna.png" alt="Ticketna Logo" width={42} height={42} />
+            <span className="text-2xl font-bold text-teal-700">Tiketna</span>
           </Link>
 
           {session?.user && (
