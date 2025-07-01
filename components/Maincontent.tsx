@@ -98,7 +98,7 @@ function Maincontent() {
       {/* Why Choose Us */}
       <section className="text-center max-w-7xl mx-auto mt-20 px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-10">
-          Why Choose Ticketna?
+          Why Choose Tiketna?
         </h2>
 
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-teal-600 scrollbar-track-gray-200">
