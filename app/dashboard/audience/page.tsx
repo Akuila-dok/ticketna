@@ -113,8 +113,8 @@ if (status === 'loading') {
       <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-lg shadow-sm border-b border-teal-200">
         <div className="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/ticketna.png" alt="Ticketna Logo" width={40} height={40} />
-            <span className="text-xl font-bold">Ticketna</span>
+            <Image src="/tiketna.png" alt="Ticketna Logo" width={40} height={40} />
+            <span className="text-xl font-bold">Tiketna</span>
           </Link>
 
           {session?.user && (
