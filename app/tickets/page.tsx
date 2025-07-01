@@ -7,6 +7,9 @@ import Footer from '@/components/Footer';
 import { FaCartPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 
+
+
+
 type Ticket = {
   id: string;
   name: string;
@@ -18,6 +21,7 @@ type Ticket = {
 };
 
 type CartItem = Ticket;
+
 
 export default function TicketsPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -67,11 +71,14 @@ export default function TicketsPage() {
       <Navbar />
       <main className="min-h-screen bg-gradient-to-tr from-orange-50 via-white to-orange-100 p-6">
         <h1 className="text-3xl font-bold text-center text-teal-700 mb-8">🎫 Upcoming Events</h1>
-
-        {loading && <p className="text-center text-gray-500">Loading tickets...</p>}
+        {loading && (
+        <div className="flex justify-center mt-8">
+            <div className="w-10 h-10 border-[3px] border-teal-500 border-t-transparent rounded-full animate-spin shadow-md" />
+        </div>
+        )}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && tickets.length === 0 && (
-          <p className="text-center text-gray-600">No tickets available.</p>
+          <p className="text-center text-gray-600">No tickets available as of now.</p>
         )}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Footer from '@/components/Footer';
 import { FaCreditCard, FaPaypal, FaMoneyBillWave } from 'react-icons/fa';
 import { supabase } from '@/lib/supabaseClient';
+import { Home, LogOut, Ticket } from 'lucide-react';
 
 export default function HostDashboard() {
   const { data: session, status } = useSession();
@@ -155,9 +156,9 @@ export default function HostDashboard() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => signOut()}
-                className="hidden md:inline-flex px-4 py-1.5 text-sm font-medium bg-teal-600 text-white rounded-full hover:bg-teal-700 transition"
+                className="hidden md:inline-flex px-4 py-1.5 text-sm font-medium bg-teal-600 text-white rounded-full hover:bg-red-500 cursor-pointer transition"
               >
-                🚪 Logout
+                 <LogOut size={20} /> Logout 
               </button>
 
               <div className="text-right">
@@ -188,7 +189,6 @@ export default function HostDashboard() {
         </div>
       </header>
 
-      {/* ... rest of the dashboard (form, stats, footer) stays unchanged ... */}
 
 
       {/* Hero */}
@@ -333,19 +333,24 @@ export default function HostDashboard() {
       </div>
 
       <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around items-center py-2 z-50">
-        <Link href="/" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
-          <span>🏠</span>Home
-        </Link>
-        <Link href="/tickets" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
-          <span>🎫</span>Tickets
-        </Link>
-        <button
-          onClick={() => signOut()}
-          className="text-teal-700 flex flex-col items-center cursor-pointer text-sm hover:text-teal-900"
-        >
-          <span>🚪</span>Logout
-        </button>
-      </footer>
+      <Link href="/" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
+        <Home size={20} />
+        Home
+      </Link>
+
+      <Link href="/tickets" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
+        <Ticket size={20} />
+        Tickets
+      </Link>
+
+      <button
+        onClick={() => signOut()}
+        className="text-teal-700 flex flex-col items-center cursor-pointer text-sm hover:text-teal-900"
+      >
+        <LogOut size={20} />
+        Logout
+      </button>
+    </footer>
     </div>
   );
 }

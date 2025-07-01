@@ -16,8 +16,8 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Left Section: Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <Image src="/ticketna.png" alt="Ticketna" width={80} height={40} />
-          <span className="text-xl font-bold tracking-wide">Ticketna</span>
+          <Image src="/tiketna.png" alt="Ticketna" width={80} height={40} />
+          <span className="text-xl font-bold tracking-wide">Tiketna</span>
         </Link>
 
         {/* Mobile Layout: Register, Login, Hamburger */}

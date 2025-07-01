@@ -7,6 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { FaCartPlus, FaTrash } from 'react-icons/fa';
+import { Home, Ticket, LogOut } from "lucide-react";
+
 
 type Ticket = {
   id: string;
@@ -97,12 +99,18 @@ export default function AudienceDashboard() {
     return '/default-avatar.png';
   };
 
-  if (status === 'loading') return <p className="text-center mt-10">Loading...</p>;
+if (status === 'loading') {
+  return (
+    <div className="flex justify-center mt-10">
+      <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
       {/* Header */}
-      <header className="bg-teal-600 text-white sticky top-0 z-50 w-full shadow-md">
+      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-lg shadow-sm border-b border-teal-200">
         <div className="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/ticketna.png" alt="Ticketna Logo" width={40} height={40} />
@@ -111,6 +119,12 @@ export default function AudienceDashboard() {
 
           {session?.user && (
             <div className="flex items-center gap-4">
+              <button
+                onClick={() => signOut()}
+                className="hidden md:inline-flex px-4 py-1.5 text-sm font-medium bg-teal-600 text-white rounded-full hover:bg-red-500 cursor-pointer transition"
+              >
+                 <LogOut size={20} /> Logout 
+              </button>
               <div className="text-right">
                 <p className="text-sm font-semibold">{session.user.name}</p>
                 <p className="text-xs">{session.user.email}</p>
@@ -270,20 +284,25 @@ export default function AudienceDashboard() {
         <Footer />
       </div>
 
-      <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around items-center py-2 z-50">
-        <Link href="/" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
-          <span>🏠</span>Home
-        </Link>
-        <Link href="/tickets" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
-          <span>🎫</span>Tickets
-        </Link>
-        <button
-          onClick={() => signOut()}
-          className="text-teal-700 flex flex-col items-center cursor-pointer text-sm hover:text-teal-900"
-        >
-          <span>🚪</span>Logout
-        </button>
-      </footer>
+       <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around items-center py-2 z-50">
+      <Link href="/" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
+        <Home size={20} />
+        Home
+      </Link>
+
+      <Link href="/tickets" className="text-teal-700 flex flex-col items-center text-sm hover:text-teal-900">
+        <Ticket size={20} />
+        Tickets
+      </Link>
+
+      <button
+        onClick={() => signOut()}
+        className="text-teal-700 flex flex-col items-center cursor-pointer text-sm hover:text-teal-900"
+      >
+        <LogOut size={20} />
+        Logout
+      </button>
+    </footer>
     </div>
   );
 }

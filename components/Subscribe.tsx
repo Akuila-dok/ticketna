@@ -1,16 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 function SubscribeCard() {
   const [expanded, setExpanded] = useState(false);
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    // Simulate success (you can replace with API call)
+    toast.success("Subscribed successfully!");
+
     setEmail("");
+    setExpanded(false); // Collapse the card after subscribing
   };
 
   return (
@@ -28,7 +32,7 @@ function SubscribeCard() {
           Stay Updated
         </h3>
 
-        {/* Expand Button (Visible when collapsed) */}
+        {/* Expand Button */}
         {!expanded && (
           <button
             onClick={() => setExpanded(true)}
@@ -38,7 +42,7 @@ function SubscribeCard() {
           </button>
         )}
 
-        {/* Collapse Button (Visible when expanded) */}
+        {/* Collapse Button */}
         {expanded && (
           <button
             onClick={() => setExpanded(false)}
@@ -48,7 +52,7 @@ function SubscribeCard() {
           </button>
         )}
 
-        {/* Expanded Content */}
+        {/* Form */}
         {expanded && (
           <div className="mt-4 animate-fade-in-up">
             <p className="text-gray-600 mb-6 text-sm">
@@ -73,11 +77,6 @@ function SubscribeCard() {
                 Submit
               </button>
             </form>
-            {submitted && (
-              <p className="text-green-600 mt-3 text-sm">
-                ✅ Subscribed successfully!
-              </p>
-            )}
           </div>
         )}
       </div>

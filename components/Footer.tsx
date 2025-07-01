@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-
 function Footer() {
   return (
     <footer className="bg-gradient-to-b from-teal-700 to-teal-950 text-black pt-12 pb-6 px-4">
@@ -10,8 +9,8 @@ function Footer() {
         {/* Logo and About */}
         <div>
           <Link href="/" className="flex mb-4 items-center space-x-2">
-          <Image src="/ticketna.png" alt="Ticketna" width={80} height={40} />
-        </Link>
+            <Image src="/tiketna.png" alt="Ticketna" width={80} height={40} />
+          </Link>
           <p className="text-gray-300 text-xl">
             Your trusted event ticketing partner — hosting and booking made simple and elegant.
           </p>
@@ -21,11 +20,37 @@ function Footer() {
         <div>
           <h4 className="text-xl font-semibold text-orange-400 mb-3">Short Cuts</h4>
           <ul className="space-y-2 text-gray-300 text-xl">
-            <li><Link href="/" className="hover:text-orange-400">Home</Link></li>
-            <li><Link href="/about" className="hover:text-orange-400">About</Link></li>
-            <li><Link href="/login" className="hover:text-orange-400">Login</Link></li>
-            <li><Link href="/register" className="hover:text-orange-400">Register</Link></li>
-            <li><Link href="/termsofservice" className="hover:text-orange-400">Term of Service</Link></li>
+            <li>
+              <Link href="/" className="hover:text-orange-400">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:text-orange-400">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link href="/login" className="hover:text-orange-400">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link href="/register" className="hover:text-orange-400">
+                Register
+              </Link>
+            </li>
+            <li>
+              <Link href="/termsofservice" className="hover:text-orange-400">
+                Term of Service
+              </Link>
+            </li>
+            {/* Added Privacy Policy Link */}
+            <li>
+              <Link href="/privacy-policy" className="hover:text-orange-400">
+                Privacy Policy
+              </Link>
+            </li>
           </ul>
         </div>
 

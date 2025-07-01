@@ -26,7 +26,7 @@ function Hero() {
               Buy Tickets
             </Link>
             <Link
-              href="/host"
+              href="/register"
               className="border border-white text-white hover:bg-white hover:text-teal-950 px-6 py-3 rounded-md text-sm font-semibold transition"
             >
               Host an Event

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/Providers'; // 👈 Import your wrapper
+import CookieConsentBanner from '@/components/CookiesConsentBanner';
 
 const ubuntu = Ubuntu({
   weight: ['400', '500', '700'],
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${ubuntu.variable} antialiased`}>
         <Providers>{children}</Providers> {/* ✅ Wrap children with SessionProvider */}
+        <CookieConsentBanner />
       </body>
     </html>
   );

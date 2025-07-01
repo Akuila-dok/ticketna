@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import toast from 'react-hot-toast'; // ✅ Add this
 import { MdEmail, MdLock, MdPerson, MdPhone, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 
@@ -40,6 +41,12 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [step, setStep] = useState<'form' | 'verify'>('form');
+  const [verificationCodeSent, setVerificationCodeSent] = useState('');
+  const [userInputCode, setUserInputCode] = useState('');
+  const [pendingData, setPendingData] = useState<RegistrationData | null>(null);
+
+
 
   const {
     register,
@@ -49,41 +56,84 @@ export default function RegisterPage() {
     resolver: zodResolver(registrationSchema),
   });
 
-  const onSubmit = async (data: RegistrationData) => {
+const onSubmit = async (data: RegistrationData) => {
   setLoading(true);
   const fullPhone = `${data.countryCode}${data.phone}`;
+  const code = Math.floor(100000 + Math.random() * 900000).toString(); // generate 6-digit code
 
   try {
-    const res = await fetch('/api/register', {
+    // Send the email with verification code
+    const res = await fetch('/api/send-verification-code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        ...data,
-        phone: fullPhone,
+        email: data.email,
+        code,
       }),
     });
 
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result.message || 'Failed to register');
+      toast.error(result.message || 'Failed to send verification code');
       return;
     }
 
-    router.push('/login');
+    toast.success('Verification code sent to your email');
+    setVerificationCodeSent(code);
+    setPendingData({ ...data, phone: fullPhone }); // store the form data temporarily
+    setStep('verify'); // move to verification screen
   } catch (err) {
     console.error(err);
-    alert('Unexpected error occurred');
+    toast.error('Unexpected error occurred');
+  } finally {
+    setLoading(false);
+  }
+};
+
+const handleCodeVerification = async () => {
+  if (userInputCode !== verificationCodeSent) {
+    toast.error('Incorrect verification code');
+    return;
+  }
+
+  if (!pendingData) return;
+
+  setLoading(true);
+
+  try {
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pendingData),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      toast.error(result.message || 'Registration failed');
+      return;
+    }
+
+    toast.success('Registration successful! Redirecting...');
+    router.push('/login');
+
+  } catch (err) {
+    console.error(err);
+    toast.error('Unexpected error occurred');
   } finally {
     setLoading(false);
   }
 };
 
 
+
+
   return (
-    <div>
-      <Navbar />
-      <main className="min-h-screen flex items-center justify-center bg-orange-50 px-4 py-16">
+  <div>
+    <Navbar />
+    <main className="min-h-screen flex items-center justify-center bg-orange-50 px-4 py-16">
+      {step === 'form' ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="bg-white rounded-2xl shadow-lg max-w-md w-full p-8 space-y-6 border-t-4 border-orange-500"
@@ -97,7 +147,7 @@ export default function RegisterPage() {
               <MdPerson className="absolute top-3 left-3 text-teal-800" />
               <input
                 {...register('fullName')}
-                placeholder="John Doe"
+                placeholder="Garang"
                 className="pl-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
               />
             </div>
@@ -113,33 +163,33 @@ export default function RegisterPage() {
                 {...register('email')}
                 type="email"
                 placeholder="you@example.com"
-                className="pl-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500  focus:ring-orange-400 focus:border-orange-400"
+                className="pl-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
               />
             </div>
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
-         {/* Password */}
-        <div>
-        <label className="block text-lg font-medium text-teal-800 mb-1">Password</label>
-        <div className="relative">
-            <MdLock className="absolute top-3 left-3 text-teal-800" />
-            <input
-            {...register('password')}
-            type={showPassword ? 'text' : 'password'}
-            placeholder="•••••••"
-            className="pl-10 pr-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
-            />
-            <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3 text-teal-800 focus:outline-none"
-            >
-            {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-            </button>
-        </div>
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
-        </div>
+          {/* Password */}
+          <div>
+            <label className="block text-lg font-medium text-teal-800 mb-1">Password</label>
+            <div className="relative">
+              <MdLock className="absolute top-3 left-3 text-teal-800" />
+              <input
+                {...register('password')}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="•••••••"
+                className="pl-10 pr-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3 text-teal-800 focus:outline-none"
+              >
+                {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+              </button>
+            </div>
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+          </div>
 
           {/* Role */}
           <div>
@@ -156,40 +206,39 @@ export default function RegisterPage() {
           </div>
 
           {/* Phone Number */}
-        <div>
+          <div>
             <label className="block text-sm font-medium text-teal-800 mb-1">Phone Number</label>
             <div className="flex gap-2">
-                <select
+              <select
                 {...register('countryCode')}
                 className="w-1/3 border rounded-md px-2 py-2 bg-white focus:ring-orange-400 focus:border-orange-400"
                 defaultValue="+254"
-                >
+              >
                 {countries.map((country) => (
-                    <option key={country.code} value={country.code}>
+                  <option key={country.code} value={country.code}>
                     {`${country.flag} ${country.code}`}
-                    </option>
+                  </option>
                 ))}
-                </select>
+              </select>
 
-                <div className="relative w-2/3">
+              <div className="relative w-2/3">
                 <MdPhone className="absolute top-3 left-3 text-teal-800" />
                 <input
-                    {...register('phone')}
-                    placeholder="7XXXXXXXX"
-                    className="pl-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
+                  {...register('phone')}
+                  placeholder="7XXXXXXXX"
+                  className="pl-10 w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
                 />
-                </div>
+              </div>
             </div>
-        {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-        </div>
+            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+          </div>
 
-
-          {/* Terms & Conditions */}
+          {/* Terms */}
           <div className="flex items-start gap-2">
             <input type="checkbox" {...register('accepted')} className="mt-1" />
             <label className="text-sm text-teal-800">
               I accept the{' '}
-              <a href="/terms" className="text-orange-600 underline hover:text-orange-800">
+              <a href="/termsofservice" className="text-orange-600 underline hover:text-orange-800">
                 Terms & Conditions
               </a>
             </label>
@@ -212,8 +261,31 @@ export default function RegisterPage() {
             </a>
           </p>
         </form>
-      </main>
-      <Footer />
-    </div>
-  );
+      ) : (
+        // Verification step
+        <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-8 space-y-6 border-t-4 border-orange-500">
+          <h2 className="text-2xl font-bold text-center text-teal-800">Verify Your Email</h2>
+          <p className="text-center text-gray-600 text-sm">
+            We&apos;ve sent a 6-digit code to <strong>{pendingData?.email}</strong>. Please enter it below to complete your registration.
+          </p>
+          <input
+            type="text"
+            placeholder="Enter verification code"
+            value={userInputCode}
+            onChange={(e) => setUserInputCode(e.target.value)}
+            className="w-full border rounded-md px-3 py-2 text-sm placeholder-gray-500 focus:ring-orange-400 focus:border-orange-400"
+          />
+          <button
+            onClick={handleCodeVerification}
+            disabled={loading}
+            className="w-full py-2 bg-teal-700 text-white cursor-pointer rounded-md font-semibold hover:bg-teal-800 transition"
+          >
+            {loading ? 'Verifying...' : 'Confirm Registration'}
+          </button>
+        </div>
+      )}
+    </main>
+    <Footer />
+  </div>
+);
 }

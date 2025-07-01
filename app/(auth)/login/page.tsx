@@ -9,7 +9,7 @@ import { MdEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { signIn } from 'next-auth/react';
-
+import toast from 'react-hot-toast';
 
 const loginSchema = z.object({
   email: z.string().email('Enter a valid email'),
@@ -31,22 +31,23 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-const onSubmit = async (data: LoginData) => {
-  setLoading(true);
-  const res = await signIn('credentials', {
-    redirect: false,
-    email: data.email,
-    password: data.password,
-  });
+  const onSubmit = async (data: LoginData) => {
+    setLoading(true);
+    const res = await signIn('credentials', {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
 
-  if (res?.error) {
-    alert('Invalid credentials');
-  } else {
-    router.push('/dashboard');
-  }
+    if (res?.error) {
+      toast.error('Invalid email or password');
+    } else {
+      toast.success('Login successful!');
+      router.push('/dashboard');
+    }
 
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   return (
     <div>
@@ -99,7 +100,7 @@ const onSubmit = async (data: LoginData) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 bg-teal-700 text-white rounded-md  cursor-pointer font-semibold hover:bg-teal-800 transition"
+            className="w-full py-2 bg-teal-700 text-white rounded-md cursor-pointer font-semibold hover:bg-teal-800 transition"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
