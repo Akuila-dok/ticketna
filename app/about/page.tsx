@@ -228,7 +228,7 @@ function AboutPage() {
             Get Started
           </button>
           <button
-            onClick={() => window.location.href = "/events"}
+            onClick={() => window.location.href = "/tickets"}
             className="bg-white border cursor-pointer border-teal-700 text-teal-700 hover:bg-teal-50 px-6 py-2 rounded-full font-semibold transition"
           >
             Explore Events
