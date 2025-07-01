@@ -20,7 +20,7 @@ function Hero() {
 
           <div className="flex space-x-4 mt-6">
             <Link
-              href="/events"
+              href="/tickets"
               className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md text-sm font-semibold transition"
             >
               Buy Tickets
