@@ -11,10 +11,10 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata: Metadata = {
-  title: 'Ticketna',
+  title: 'Tiketna',
   description: 'Event planner platform that helps you manage your concert effortlessly',
   icons: {
-    icon: '/ticketna.png',
+    icon: '/tiketna.png',
   },
 };
 
