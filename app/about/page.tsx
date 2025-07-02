@@ -22,7 +22,7 @@ function AboutPage() {
     It all began on a rainy night — somewhere between an overpriced concert ticket and a{' '}
     &quot;<strong>Technical Issue.</strong>&quot; that conveniently ate someone&apos;s payment. That someone? —{' '}
     <strong>Us.</strong> And that moment? —The{' '}
-    <span className="text-orange-600 font-semibold">spark</span> that would become Ticketna.
+    <span className="text-orange-600 font-semibold">spark</span> that would become Tiketna.
   </p>
 
   <p>
@@ -55,7 +55,7 @@ function AboutPage() {
 
   <p className="text-center">
     <span className="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full font-medium mt-4">
-      Welcome to Ticketna — where events begin and drama ends.
+      Welcome to Tiketna — where events begin and drama ends.
     </span>
   </p>
 </section>
@@ -157,7 +157,7 @@ function AboutPage() {
 
    {/* Meet the Team */}
 <section className="py-20 px-4 sm:px-6 max-w-7xl mx-auto text-center">
-  <h2 className="text-4xl font-bold text-teal-800 mb-4">Meet the Team Behind Ticketna</h2>
+  <h2 className="text-4xl font-bold text-teal-800 mb-4">Meet the Team Behind Tiketna</h2>
   <p className="text-gray-700 max-w-3xl text-xl mx-auto mb-14">
     We&apos;re not just building code — we&apos;re crafting joy. These are the architects of your next favorite event experience.
   </p>
@@ -218,7 +218,7 @@ function AboutPage() {
           Ready to host or attend amazing events?
         </h3>
         <p className="text-gray-700 mb-6">
-          Join thousands of event lovers already using Ticketna today.
+          Join thousands of event lovers already using Tiketna today.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button

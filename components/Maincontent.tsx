@@ -67,7 +67,7 @@ function Maincontent() {
         </div>
         <div className="mt-10">
           <button
-            onClick={() => router.push("/host")}
+            onClick={() => router.push("/register")}
             className="bg-orange-500 text-white px-6 py-2 cursor-pointer rounded-full font-semibold hover:bg-orange-600 transition"
           >
             Host Your Event
@@ -87,7 +87,7 @@ function Maincontent() {
         </div>
         <div className="mt-10">
           <button
-            onClick={() => router.push("/events")}
+            onClick={() => router.push("/tickets")}
             className="bg-orange-500 text-white px-6 py-2 cursor-pointer rounded-full font-semibold hover:bg-orange-600 transition"
           >
             Buy Ticket
