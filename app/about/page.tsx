@@ -11,7 +11,7 @@ function AboutPage() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-teal-600 to-teal-900 text-white py-20 text-center px-4">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">About Ticketna</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">About Tiketna</h1>
         <p className="max-w-2xl mx-auto text-lg text-teal-100">
           Empowering creators and fans with seamless ticketing experiences.
         </p>
