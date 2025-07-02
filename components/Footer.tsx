@@ -97,7 +97,7 @@ function Footer() {
 
       {/* Copyright */}
       <p className="text-center text-sm text-gray-400">
-        &copy; {new Date().getFullYear()} Ticketna. All rights reserved.
+        &copy; {new Date().getFullYear()} Tiketna. All rights reserved.
       </p>
     </footer>
   );
